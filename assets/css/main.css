@@ -22,7 +22,8 @@
   --background-color: #ffffff; /* Background color for the entire website, including individual sections */
   --default-color: #4e4e4e; /* Default color used for the majority of the text content across the entire website */
   --heading-color: #0a090f; /* Color for headings, subheadings and title throughout the website */
-  --accent-color: #0078ff; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --accent-color: #6C63FF; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --accent-secondary: #00D4AA; /* Teal accent for highlights, badges, and secondary emphasis */
   --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
   --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
 }
@@ -34,7 +35,7 @@
   --nav-mobile-background-color: #ffffff; /* Used as the background color for mobile navigation menu */
   --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
   --nav-dropdown-color: #212529; /* Used for navigation links of the dropdown items in the navigation menu. */
-  --nav-dropdown-hover-color: #0078ff; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+  --nav-dropdown-hover-color: #6C63FF; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
 }
 
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
@@ -53,11 +54,11 @@
 }
 
 .accent-background {
-  --background-color: #0078ff;
+  --background-color: #6C63FF;
   --default-color: #ffffff;
   --heading-color: #ffffff;
   --accent-color: #ffffff;
-  --surface-color: #3393ff;
+  --surface-color: #8B83FF;
   --contrast-color: #ffffff;
 }
 
@@ -726,10 +727,54 @@ section,
 /*--------------------------------------------------------------
 # About Section
 --------------------------------------------------------------*/
+.about {
+  position: relative;
+}
+
+.about .about-bg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.about:before {
+  content: "";
+  background: rgba(6, 6, 6, 0.82);
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
 .about .container {
-  background-color: var(--surface-color);
-  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
-  padding: 30px;
+  position: relative;
+  z-index: 3;
+  background-color: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.3);
+  padding: 40px;
+  border-radius: 16px;
+}
+
+.about .about-info p {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.about .about-info p strong {
+  color: var(--accent-secondary);
+}
+
+.about .about-info p a {
+  color: var(--accent-secondary);
+}
+
+.about .about-info p a:hover {
+  color: #ffffff;
 }
 
 .about .skills-content h5 {
@@ -747,7 +792,7 @@ section,
 }
 
 .about .progress .skill {
-  color: var(--default-color);
+  color: rgba(255, 255, 255, 0.9);
   padding: 0;
   margin: 0 0 6px 0;
   text-transform: uppercase;
@@ -759,18 +804,21 @@ section,
 .about .progress .skill .val {
   float: right;
   font-style: normal;
+  color: var(--accent-secondary);
 }
 
 .about .progress-bar-wrap {
-  background: color-mix(in srgb, var(--default-color), transparent 90%);
+  background: rgba(255, 255, 255, 0.12);
   height: 10px;
+  border-radius: 5px;
 }
 
 .about .progress-bar {
   width: 1px;
   height: 10px;
   transition: 0.9s;
-  background-color: var(--accent-color);
+  background: linear-gradient(90deg, var(--accent-color), var(--accent-secondary));
+  border-radius: 5px;
 }
 
 .about .about-me h4 {
@@ -779,24 +827,35 @@ section,
   padding-bottom: 10px;
   margin-bottom: 30px;
   font-weight: 700;
+  color: #ffffff;
 }
 
 .about .about-me h4:after {
   content: "";
   position: absolute;
   display: block;
-  width: 64px;
-  height: 3px;
-  background: var(--accent-color);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-color), var(--accent-secondary));
   left: 0;
   bottom: 0;
-  margin: auto;
+  border-radius: 2px;
 }
 
 .about .about-me p {
   font-size: 18px;
+  color: rgba(255, 255, 255, 0.85);
 }
 
+.about .about-me p strong {
+  color: var(--accent-secondary);
+}
+
+@media (max-width: 768px) {
+  .about .container {
+    padding: 24px;
+  }
+}
 /*--------------------------------------------------------------
 # Resume Section
 --------------------------------------------------------------*/
@@ -1626,4 +1685,350 @@ section,
 --------------------------------------------------------------*/
 .starter-section {
   /* Add your styles here */
+}
+/*--------------------------------------------------------------
+# Teal Accent Overrides — Secondary accent color highlights
+--------------------------------------------------------------*/
+/* Teal underline on active nav link instead of purple */
+.navmenu > ul > li > a:before {
+  background-color: var(--accent-secondary);
+}
+
+/* Teal accent on service/achievement icon hover */
+.services .service-item:hover .icon {
+  background: var(--accent-secondary);
+}
+
+/*--------------------------------------------------------------
+# Hero CTA Buttons
+--------------------------------------------------------------*/
+.hero-cta .btn-hero-primary {
+  display: inline-block;
+  padding: 14px 36px;
+  background: var(--accent-color);
+  color: #ffffff;
+  border-radius: 50px;
+  font-family: var(--nav-font);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  transition: all 0.4s ease;
+  border: 2px solid var(--accent-color);
+}
+
+.hero-cta .btn-hero-primary:hover {
+  background: var(--accent-secondary);
+  border-color: var(--accent-secondary);
+  color: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(108, 99, 255, 0.3);
+}
+
+.hero-cta .btn-hero-outline {
+  display: inline-block;
+  padding: 14px 36px;
+  background: transparent;
+  color: #ffffff;
+  border-radius: 50px;
+  font-family: var(--nav-font);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  transition: all 0.4s ease;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.hero-cta .btn-hero-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #ffffff;
+  color: #ffffff;
+  transform: translateY(-3px);
+}
+
+/*--------------------------------------------------------------
+# Stats Section
+--------------------------------------------------------------*/
+.stats {
+  position: relative;
+  padding: 100px 0;
+}
+
+.stats img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.stats:before {
+  content: "";
+  background: rgba(6, 6, 6, 0.75);
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.stats .container {
+  position: relative;
+  z-index: 3;
+}
+
+.stats .stats-item {
+  padding: 30px 15px;
+}
+
+.stats .stats-item .purecounter {
+  font-size: 56px;
+  font-weight: 800;
+  color: var(--accent-secondary);
+  font-family: var(--heading-font);
+  display: inline;
+}
+
+.stats .stats-item .stats-plus {
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--accent-secondary);
+  font-family: var(--heading-font);
+}
+
+.stats .stats-item p {
+  margin: 10px 0 0 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: var(--nav-font);
+}
+
+/*--------------------------------------------------------------
+# Portfolio Filterable Gallery (Isotope)
+--------------------------------------------------------------*/
+.portfolio .isotope-filters {
+  padding: 0;
+  margin: 0 auto 40px auto;
+  list-style: none;
+  text-align: center;
+}
+
+.portfolio .isotope-filters li {
+  cursor: pointer;
+  display: inline-block;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 6px 10px 6px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 50px;
+  border: 2px solid color-mix(in srgb, var(--default-color), transparent 80%);
+  color: var(--default-color);
+  background: transparent;
+  transition: all 0.3s ease-in-out;
+  font-family: var(--nav-font);
+}
+
+.portfolio .isotope-filters li:hover,
+.portfolio .isotope-filters li.filter-active {
+  color: #ffffff;
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.portfolio .isotope-container {
+  width: 100%;
+}
+
+/* Portfolio Card */
+.portfolio-card {
+  background-color: var(--surface-color);
+  border-radius: 16px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.06);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  padding: 30px;
+  height: 100%;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.portfolio-card:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-color), var(--accent-secondary));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.portfolio-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(108, 99, 255, 0.15);
+}
+
+.portfolio-card:hover:before {
+  transform: scaleX(1);
+}
+
+.portfolio-card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #ffffff;
+}
+
+.portfolio-card-body h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--heading-color);
+}
+
+.portfolio-card-body p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--default-color);
+  margin-bottom: 16px;
+}
+
+/* Tags */
+.portfolio-card-tags {
+  margin-bottom: 14px;
+}
+
+.portfolio-card-tags .tag {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 50px;
+  margin-right: 6px;
+  margin-bottom: 6px;
+  font-family: var(--nav-font);
+}
+
+.portfolio-card-tags .tag-aiml {
+  background: rgba(108, 99, 255, 0.1);
+  color: var(--accent-color);
+}
+
+.portfolio-card-tags .tag-webdev {
+  background: rgba(0, 212, 170, 0.1);
+  color: var(--accent-secondary);
+}
+
+.portfolio-card-tags .tag-hackathon {
+  background: rgba(255, 107, 53, 0.1);
+  color: #FF6B35;
+}
+
+.portfolio-card-tags .tag-iot {
+  background: rgba(0, 150, 136, 0.1);
+  color: #009688;
+}
+
+.portfolio-card-tags .tag-fullstack {
+  background: rgba(156, 39, 176, 0.1);
+  color: #9C27B0;
+}
+
+/* Tech Stack Badges */
+.portfolio-card-tech {
+  margin-bottom: 16px;
+}
+
+.portfolio-card-tech span {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  background: color-mix(in srgb, var(--default-color), transparent 92%);
+  color: var(--default-color);
+  border-radius: 6px;
+  margin-right: 6px;
+  margin-bottom: 6px;
+  font-family: var(--default-font);
+}
+
+/* Card Links */
+.portfolio-card-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent-color);
+  transition: all 0.3s ease;
+  font-family: var(--nav-font);
+}
+
+.portfolio-card-links a:hover {
+  color: var(--accent-secondary);
+  gap: 10px;
+}
+
+.portfolio-card-links .text-muted {
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* Responsive: portfolio cards on mobile */
+@media (max-width: 768px) {
+  .portfolio .isotope-filters li {
+    padding: 8px 16px;
+    font-size: 12px;
+    margin: 0 4px 8px 4px;
+  }
+
+  .portfolio-card {
+    padding: 24px;
+  }
+}
+
+/*--------------------------------------------------------------
+# Resume Timeline — Teal accent on dots
+--------------------------------------------------------------*/
+.resume .resume-item {
+  border-left-color: var(--accent-secondary);
+}
+
+.resume .resume-item::before {
+  border-color: var(--accent-secondary);
+}
+
+/*--------------------------------------------------------------
+# Section Title — gradient underline
+--------------------------------------------------------------*/
+.section-title h2:after {
+  background: linear-gradient(90deg, var(--accent-color), var(--accent-secondary));
+  width: 70px;
+  height: 4px;
+  border-radius: 2px;
+}
+
+/*--------------------------------------------------------------
+# About Me underline — gradient
+--------------------------------------------------------------*/
+.about .about-me h4:after {
+  background: linear-gradient(90deg, var(--accent-color), var(--accent-secondary));
+  width: 80px;
+  height: 4px;
+  border-radius: 2px;
 }
