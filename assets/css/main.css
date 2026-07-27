@@ -723,7 +723,6 @@ section,
     font-size: 20px;
   }
 }
-
 /*--------------------------------------------------------------
 # About Section
 --------------------------------------------------------------*/
@@ -1967,14 +1966,14 @@ section,
   font-family: var(--default-font);
 }
 
-/* Card Links */
+/* Card Links — scoped darker shade (#5F56F0) for WCAG AA contrast ≥ 4.5:1 on white */
 .portfolio-card-links a {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-size: 14px;
   font-weight: 600;
-  color: var(--accent-color);
+  color: #5F56F0;
   transition: all 0.3s ease;
   font-family: var(--nav-font);
 }
@@ -2031,4 +2030,63 @@ section,
   width: 80px;
   height: 4px;
   border-radius: 2px;
+}
+
+/*--------------------------------------------------------------
+# Stats Sublabel — secondary context text under stat counters
+--------------------------------------------------------------*/
+.stats-sublabel {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 2px;
+  font-family: var(--default-font);
+}
+
+/*--------------------------------------------------------------
+# Reduced Motion — Accessibility (prefers-reduced-motion)
+AOS uses `once: true` so elements still receive the .aos-animate
+class (which sets final opacity/transform). With transitions
+shortened to 0.01ms, elements snap instantly to their final
+visible state — no content is hidden or stuck off-screen.
+--------------------------------------------------------------*/
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* ==========================================================
+   ChatGPT Fix: Stats Counter Alignment
+   Keeps values like 6+ and 100K+ on the same line.
+   ========================================================== */
+.stats .stats-item .counter{
+  display:inline-flex;
+  align-items:baseline;
+  justify-content:center;
+  gap:2px;
+}
+
+.stats .stats-item .purecounter,
+.stats .stats-item .stats-plus{
+  display:inline !important;
+  white-space:nowrap;
+  vertical-align:baseline;
+}
+
+.stats .stats-item span{
+  display:inline;
+}
+
+.stats .stats-item{
+  text-align:center;
 }

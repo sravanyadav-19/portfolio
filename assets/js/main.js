@@ -190,25 +190,6 @@
   });
 
   /**
-   * Init swiper sliders
-   */
-  function initSwiper() {
-    document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
-      let config = JSON.parse(
-        swiperElement.querySelector(".swiper-config").innerHTML.trim()
-      );
-
-      if (swiperElement.classList.contains("swiper-tab")) {
-        initSwiperWithCustomPagination(swiperElement, config);
-      } else {
-        new Swiper(swiperElement, config);
-      }
-    });
-  }
-
-  window.addEventListener("load", initSwiper);
-
-  /**
    * Correct scrolling position upon page load for URLs containing hash links.
    */
   window.addEventListener('load', function(e) {
@@ -247,5 +228,67 @@
   }
   window.addEventListener('load', navmenuScrollspy);
   document.addEventListener('scroll', navmenuScrollspy);
+
+  /**
+   * Contact form — Web3Forms handler (replaces php-email-form/validate.js)
+   * Sends form data via fetch() POST to the Web3Forms API.
+   * Shows .loading / .sent-message / .error-message states matching the
+   * existing template visual conventions.
+   */
+  const contactForm = document.querySelector('#contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const form = this;
+      const loadingEl = form.querySelector('.loading');
+      const errorEl = form.querySelector('.error-message');
+      const sentEl = form.querySelector('.sent-message');
+      const submitBtn = form.querySelector('button[type="submit"]');
+
+      // Reset states
+      loadingEl.style.display = 'none';
+      errorEl.style.display = 'none';
+      errorEl.textContent = '';
+      sentEl.style.display = 'none';
+
+      // Show loading
+      loadingEl.style.display = 'block';
+      submitBtn.disabled = true;
+
+      try {
+        const formData = new FormData(form);
+        const object = Object.fromEntries(formData);
+        const json = JSON.stringify(object);
+
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: json
+        });
+
+        const result = await response.json();
+
+        loadingEl.style.display = 'none';
+
+        if (response.status === 200 && result.success) {
+          sentEl.style.display = 'block';
+          form.reset();
+        } else {
+          errorEl.textContent = result.message || 'There was an error sending your message. Please try again.';
+          errorEl.style.display = 'block';
+        }
+      } catch (err) {
+        loadingEl.style.display = 'none';
+        errorEl.textContent = 'A network error occurred. Please check your connection and try again.';
+        errorEl.style.display = 'block';
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  }
 
 })();

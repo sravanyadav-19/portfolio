@@ -15,7 +15,7 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Sravan Yadav K | AI/ML Engineer & Full-Stack Developer">
   <meta property="og:description" content="B.Tech AI/ML student, hackathon winner, and full-stack developer. Explore projects in deep learning, NLP, and web development.">
-  <meta property="og:image" content="assets/img/profile-img.jpg">
+  <meta property="og:image" content="assets/img/profile-img.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Sravan Yadav K | AI/ML Engineer & Full-Stack Developer">
   <meta name="twitter:description" content="B.Tech AI/ML student, hackathon winner, and full-stack developer.">
@@ -34,7 +34,6 @@
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
@@ -74,10 +73,10 @@
       <div class="container d-flex flex-column align-items-center justify-content-center text-center" data-aos="fade-up" data-aos-delay="100">
         <h2 data-aos="zoom-in" data-aos-delay="200">Sravan Yadav K</h2>
         <p data-aos="fade-up" data-aos-delay="400"><span class="typed" data-typed-items="Full-Stack Developer, AI/ML Engineer, Problem Solver, Gamer, Photographer"></span></p>
-        <div class="hero-cta mt-4" data-aos="fade-up" data-aos-delay="600">
+        <!-- <div class="hero-cta mt-4" data-aos="fade-up" data-aos-delay="600">
           <a href="#portfolio" class="btn btn-hero-primary me-3">View My Work</a>
           <a href="#contact" class="btn btn-hero-outline">Get In Touch</a>
-        </div>
+        </div> -->
       </div>
 
     </section><!-- /Hero Section -->
@@ -94,7 +93,7 @@
 
             <div class="row justify-content-between gy-4">
               <div class="col-lg-5" data-aos="fade-right" data-aos-delay="200">
-                <img src="assets/img/profile-img.jpg" class="img-fluid" alt="Sravan Yadav K — AI/ML student and developer portrait photo" loading="lazy">
+                <img src="assets/img/hero-img.jpg" class="img-fluid" alt="Sravan Yadav K — AI/ML student and developer portrait photo" loading="lazy">
               </div>
               <div class="col-lg-7 about-info" data-aos="fade-left" data-aos-delay="200">
                 <p><strong>Name:</strong> <span>Sravan Yadav K</span></p>
@@ -191,7 +190,7 @@
 
           <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="200">
             <div class="stats-item">
-              <span data-purecounter-start="0" data-purecounter-end="6" data-purecounter-duration="1" class="purecounter"></span>
+              <span data-purecounter-start="0" data-purecounter-end="6" data-purecounter-duration="1" class="purecounter"></span><span class="stats-plus">+</span>
               <p>Hackathons Participated</p>
             </div>
           </div>
@@ -206,7 +205,7 @@
           <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="400">
             <div class="stats-item">
               <span data-purecounter-start="0" data-purecounter-end="100" data-purecounter-duration="1.5" class="purecounter"></span><span class="stats-plus">K+</span>
-              <p>Resumes Processed</p>
+              <p>Resumes Ranked<br><small class="stats-sublabel">(ML Hackathon Project)</small></p>
             </div>
           </div>
 
@@ -583,13 +582,15 @@
           </div>
         </div>
 
-        <div class="social-links d-flex justify-content-center mt-5" data-aos="fade-up" data-aos-delay="300">
+        <!-- <div class="social-links d-flex justify-content-center mt-5" data-aos="fade-up" data-aos-delay="300">
           <a href="https://github.com/sravanyadav-19" target="_blank" rel="noopener noreferrer" aria-label="Visit Sravan's GitHub profile"><i class="bi bi-github" aria-hidden="true"></i></a>
           <a href="https://www.linkedin.com/in/sravanyadav/" target="_blank" rel="noopener noreferrer" aria-label="Visit Sravan's LinkedIn profile"><i class="bi bi-linkedin" aria-hidden="true"></i></a>
           <a href="https://leetcode.com/u/sravanyadav-19/" target="_blank" rel="noopener noreferrer" aria-label="Visit Sravan's LeetCode profile"><i class="bi bi-code-square" aria-hidden="true"></i></a>
-        </div>
+        </div> -->
 
-        <form action="forms/contact.php" method="post" class="php-email-form mt-5" data-aos="fade-up" data-aos-delay="400">
+        <form id="contact-form" class="php-email-form mt-5" data-aos="fade-up" data-aos-delay="400">
+          <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+          <input type="checkbox" name="botcheck" class="hidden" style="display:none !important" tabindex="-1" autocomplete="off">
           <div class="row gy-4">
 
             <div class="col-md-6">
@@ -637,7 +638,7 @@
         <a href="https://leetcode.com/u/sravanyadav-19/" target="_blank" rel="noopener noreferrer" aria-label="LeetCode"><i class="bi bi-code-square" aria-hidden="true"></i></a>
       </div>
       <div class="credits">
-        Designed for Sravan Yadav K | Built with Bootstrap
+        Designed for Sravan Yadav K 
       </div>
     </div>
 
@@ -651,7 +652,6 @@
 
   <!-- Vendor JS Files -->
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/typed.js/typed.umd.js"></script>
   <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
@@ -659,11 +659,10 @@
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
 
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2155930db8bdc0a',t:'MTc4NTA4OTI5Mg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a21a12e62c5c38e6',t:'MTc4NTEzODg0Mg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 
 </html>
