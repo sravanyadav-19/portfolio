@@ -1,294 +1,253 @@
-/**
-* Template Name: DevFolio
-* Template URL: https://bootstrapmade.com/devfolio-bootstrap-portfolio-html-template/
-* Updated: Aug 07 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
+/* Sravan Yadav K — portfolio interactions */
 
-(function() {
+(() => {
   "use strict";
 
-  /**
-   * Apply .scrolled class to the body as the page is scrolled down
-   */
-  function toggleScrolled() {
-    const selectBody = document.querySelector('body');
-    const selectHeader = document.querySelector('#header');
-    if (!selectHeader.classList.contains('scroll-up-sticky') && !selectHeader.classList.contains('sticky-top') && !selectHeader.classList.contains('fixed-top')) return;
-    window.scrollY > 100 ? selectBody.classList.add('scrolled') : selectBody.classList.remove('scrolled');
-  }
-
-  document.addEventListener('scroll', toggleScrolled);
-  window.addEventListener('load', toggleScrolled);
-
-  /**
-   * Mobile nav toggle
-   */
-  const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
-
-  function mobileNavToogle() {
-    document.querySelector('body').classList.toggle('mobile-nav-active');
-    mobileNavToggleBtn.classList.toggle('bi-list');
-    mobileNavToggleBtn.classList.toggle('bi-x');
-  }
-  mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
-
-  /**
-   * Hide mobile nav on same-page/hash links
-   */
-  document.querySelectorAll('#navmenu a').forEach(navmenu => {
-    navmenu.addEventListener('click', () => {
-      if (document.querySelector('.mobile-nav-active')) {
-        mobileNavToogle();
-      }
-    });
-
-  });
-
-  /**
-   * Toggle mobile nav dropdowns
-   */
-  document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
-    navmenu.addEventListener('click', function(e) {
-      e.preventDefault();
-      this.parentNode.classList.toggle('active');
-      this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
-      e.stopImmediatePropagation();
-    });
-  });
-
-  /**
-   * Preloader
-   */
-  const preloader = document.querySelector('#preloader');
-  if (preloader) {
-    window.addEventListener('load', () => {
-      preloader.remove();
-    });
-  }
-
-  /**
-   * Scroll top button
-   */
-  let scrollTop = document.querySelector('.scroll-top');
-
-  function toggleScrollTop() {
-    if (scrollTop) {
-      window.scrollY > 100 ? scrollTop.classList.add('active') : scrollTop.classList.remove('active');
+  const ready = (callback) => {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", callback, { once: true });
+    } else {
+      callback();
     }
-  }
-  scrollTop.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
+  };
+
+  ready(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const header = document.querySelector(".header");
+    const scrollTopButton = document.querySelector(".scroll-top");
+    const navmenu = document.querySelector(".navmenu");
+    const mobileToggle = document.querySelector(".mobile-nav-toggle");
+    const navLinks = [...document.querySelectorAll(".navmenu a[href^='#']")];
+
+    /* Header, scroll-spy, and back-to-top */
+    const updateActiveNavigation = () => {
+      const probe = window.scrollY + Math.max(180, window.innerHeight * 0.3);
+      let activeId = navLinks.length ? navLinks[0].getAttribute("href").slice(1) : "";
+
+      navLinks.forEach((link) => {
+        const section = document.querySelector(link.getAttribute("href"));
+        if (section && probe >= section.offsetTop) activeId = section.id;
+      });
+
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 20 && navLinks.length) {
+        activeId = navLinks[navLinks.length - 1].getAttribute("href").slice(1);
+      }
+
+      navLinks.forEach((link) => {
+        const isActive = link.getAttribute("href") === `#${activeId}`;
+        link.classList.toggle("active", isActive);
+        if (isActive) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      });
+    };
+
+    let scrollTicking = false;
+    const updateScrollUI = () => {
+      if (header) header.classList.toggle("scrolled", window.scrollY > 24);
+      if (scrollTopButton) scrollTopButton.classList.toggle("visible", window.scrollY > 500);
+      updateActiveNavigation();
+      scrollTicking = false;
+    };
+
+    const requestScrollUpdate = () => {
+      if (!scrollTicking) {
+        window.requestAnimationFrame(updateScrollUI);
+        scrollTicking = true;
+      }
+    };
+
+    window.addEventListener("scroll", requestScrollUpdate, { passive: true });
+    window.addEventListener("resize", requestScrollUpdate);
+    updateScrollUI();
+
+    /* Accessible mobile navigation */
+    const setMenuState = (open, returnFocus = false) => {
+      if (!navmenu || !mobileToggle) return;
+      navmenu.classList.toggle("is-open", open);
+      header?.classList.toggle("menu-open", open);
+      document.body.classList.toggle("nav-open", open);
+      mobileToggle.setAttribute("aria-expanded", String(open));
+      mobileToggle.setAttribute("aria-label", open ? (mobileToggle.dataset.closeLabel || "Close navigation") : (mobileToggle.dataset.openLabel || "Open navigation"));
+      const icon = mobileToggle.querySelector("i");
+      icon?.classList.toggle("bi-list", !open);
+      icon?.classList.toggle("bi-x", open);
+      if (returnFocus) mobileToggle.focus();
+    };
+
+    mobileToggle?.addEventListener("click", () => {
+      setMenuState(mobileToggle.getAttribute("aria-expanded") !== "true");
     });
-  });
 
-  window.addEventListener('load', toggleScrollTop);
-  document.addEventListener('scroll', toggleScrollTop);
-
-  /**
-   * Animation on scroll function and init
-   */
-  function aosInit() {
-    AOS.init({
-      duration: 600,
-      easing: 'ease-in-out',
-      once: true,
-      mirror: false
-    });
-  }
-  window.addEventListener('load', aosInit);
-
-  /**
-   * Init typed.js
-   */
-  const selectTyped = document.querySelector('.typed');
-  if (selectTyped) {
-    let typed_strings = selectTyped.getAttribute('data-typed-items');
-    typed_strings = typed_strings.split(',');
-    new Typed('.typed', {
-      strings: typed_strings,
-      loop: true,
-      typeSpeed: 100,
-      backSpeed: 50,
-      backDelay: 2000
-    });
-  }
-
-  /**
-   * Animate the skills items on reveal
-   */
-  let skillsAnimation = document.querySelectorAll('.skills-animation');
-  skillsAnimation.forEach((item) => {
-    new Waypoint({
-      element: item,
-      offset: '80%',
-      handler: function(direction) {
-        let progress = item.querySelectorAll('.progress .progress-bar');
-        progress.forEach(el => {
-          el.style.width = el.getAttribute('aria-valuenow') + '%';
-        });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && mobileToggle?.getAttribute("aria-expanded") === "true") {
+        setMenuState(false, true);
       }
     });
-  });
 
-  /**
-   * Initiate Pure Counter
-   */
-  new PureCounter();
+    document.addEventListener("click", (event) => {
+      if (mobileToggle?.getAttribute("aria-expanded") === "true" && header && !header.contains(event.target)) {
+        setMenuState(false);
+      }
+    });
 
-  /**
-   * Initiate glightbox
-   */
-  const glightbox = GLightbox({
-    selector: '.glightbox'
-  });
+    /* Smooth in-page navigation with a fixed-header offset supplied by CSS */
+    document.querySelectorAll("a[href^='#']").forEach((anchor) => {
+      anchor.addEventListener("click", (event) => {
+        const selector = anchor.getAttribute("href");
+        if (!selector || selector === "#") return;
+        const target = document.querySelector(selector);
+        if (!target) return;
 
-  /**
-   * Init isotope layout and filters
-   */
-  document.querySelectorAll('.isotope-layout').forEach(function(isotopeItem) {
-    let layout = isotopeItem.getAttribute('data-layout') ?? 'masonry';
-    let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
-    let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
+        event.preventDefault();
+        setMenuState(false);
+        target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
 
-    let initIsotope;
-    imagesLoaded(isotopeItem.querySelector('.isotope-container'), function() {
-      initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
-        itemSelector: '.isotope-item',
-        layoutMode: layout,
-        filter: filter,
-        sortBy: sort
+        try {
+          if (window.location.hash !== selector) history.pushState(null, "", selector);
+        } catch (_) {
+          // Hash updates are optional when previewing directly from a local file.
+        }
       });
     });
 
-    isotopeItem.querySelectorAll('.isotope-filters li').forEach(function(filters) {
-      filters.addEventListener('click', function() {
-        isotopeItem.querySelector('.isotope-filters .filter-active').classList.remove('filter-active');
-        this.classList.add('filter-active');
-        initIsotope.arrange({
-          filter: this.getAttribute('data-filter')
-        });
-        if (typeof aosInit === 'function') {
-          aosInit();
-        }
-      }, false);
-    });
+    /* AOS scroll reveals — local, free DevFolio vendor library */
+    if (window.AOS) {
+      window.AOS.init({
+        duration: 650,
+        easing: "ease-out",
+        once: true,
+        offset: 55,
+        disable: reduceMotion
+      });
+      window.addEventListener("load", () => window.AOS.refresh(), { once: true });
+    }
 
-  });
+    /* Typed.js hero rotation, with visible static fallbacks */
+    const typedElement = document.querySelector(".typed");
+    if (typedElement) {
+      const phrases = (typedElement.dataset.typedItems || typedElement.textContent || "")
+        .split(",")
+        .map((phrase) => phrase.trim())
+        .filter(Boolean);
 
-  /**
-   * Frequently Asked Questions Toggle
-   */
-  document.querySelectorAll('.faq-item h3, .faq-item .faq-toggle').forEach((faqItem) => {
-    faqItem.addEventListener('click', () => {
-      faqItem.parentNode.classList.toggle('faq-active');
-    });
-  });
-
-  /**
-   * Correct scrolling position upon page load for URLs containing hash links.
-   */
-  window.addEventListener('load', function(e) {
-    if (window.location.hash) {
-      if (document.querySelector(window.location.hash)) {
-        setTimeout(() => {
-          let section = document.querySelector(window.location.hash);
-          let scrollMarginTop = getComputedStyle(section).scrollMarginTop;
-          window.scrollTo({
-            top: section.offsetTop - parseInt(scrollMarginTop),
-            behavior: 'smooth'
+      if (!phrases.length) {
+        typedElement.textContent = "";
+      } else if (reduceMotion || typeof window.Typed !== "function") {
+        typedElement.textContent = phrases[0];
+      } else {
+        try {
+          new window.Typed(typedElement, {
+            strings: phrases,
+            typeSpeed: 65,
+            backSpeed: 35,
+            backDelay: 1700,
+            startDelay: 350,
+            smartBackspace: true,
+            loop: true,
+            showCursor: true,
+            cursorChar: "|"
           });
-        }, 100);
+        } catch (_) {
+          typedElement.textContent = phrases[0];
+        }
       }
     }
-  });
 
-  /**
-   * Navmenu Scrollspy
-   */
-  let navmenulinks = document.querySelectorAll('.navmenu a');
+    /* Skill bars fill only when their cards enter the viewport */
+    const skillCards = [...document.querySelectorAll(".skill-card")];
+    const fillSkillCard = (card) => {
+      card.querySelectorAll(".progress-bar").forEach((bar) => {
+        bar.style.width = bar.dataset.width || "0%";
+      });
+    };
 
-  function navmenuScrollspy() {
-    navmenulinks.forEach(navmenulink => {
-      if (!navmenulink.hash) return;
-      let section = document.querySelector(navmenulink.hash);
-      if (!section) return;
-      let position = window.scrollY + 200;
-      if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
-        document.querySelectorAll('.navmenu a.active').forEach(link => link.classList.remove('active'));
-        navmenulink.classList.add('active');
-      } else {
-        navmenulink.classList.remove('active');
-      }
-    })
-  }
-  window.addEventListener('load', navmenuScrollspy);
-  document.addEventListener('scroll', navmenuScrollspy);
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      skillCards.forEach(fillSkillCard);
+    } else {
+      const skillObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            fillSkillCard(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.35, rootMargin: "0px 0px -30px" });
+      skillCards.forEach((card) => skillObserver.observe(card));
+    }
 
-  /**
-   * Contact form — Web3Forms handler (replaces php-email-form/validate.js)
-   * Sends form data via fetch() POST to the Web3Forms API.
-   * Shows .loading / .sent-message / .error-message states matching the
-   * existing template visual conventions.
-   */
-  const contactForm = document.querySelector('#contact-form');
-  if (contactForm) {
-    contactForm.addEventListener('submit', async function(e) {
-      e.preventDefault();
+    /* Fast, dependency-free project filtering */
+    const filterButtons = [...document.querySelectorAll(".filter-btn")];
+    const projectItems = [...document.querySelectorAll(".portfolio-item")];
+    const filterGroup = document.querySelector(".portfolio-filters");
+    const filterStatus = document.querySelector(".filter-status");
 
-      const form = this;
-      const loadingEl = form.querySelector('.loading');
-      const errorEl = form.querySelector('.error-message');
-      const sentEl = form.querySelector('.sent-message');
-      const submitBtn = form.querySelector('button[type="submit"]');
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const filter = button.dataset.filter;
+        let visibleCount = 0;
 
-      // Reset states
-      loadingEl.style.display = 'none';
-      errorEl.style.display = 'none';
-      errorEl.textContent = '';
-      sentEl.style.display = 'none';
-
-      // Show loading
-      loadingEl.style.display = 'block';
-      submitBtn.disabled = true;
-
-      try {
-        const formData = new FormData(form);
-        const object = Object.fromEntries(formData);
-        const json = JSON.stringify(object);
-
-        const response = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: json
+        filterButtons.forEach((item) => {
+          const selected = item === button;
+          item.classList.toggle("active", selected);
+          item.setAttribute("aria-pressed", String(selected));
         });
 
-        const result = await response.json();
+        projectItems.forEach((item) => {
+          const show = filter === "all" || item.dataset.category === filter;
+          item.hidden = !show;
+          item.classList.remove("filter-enter");
 
-        loadingEl.style.display = 'none';
+          if (show) {
+            visibleCount += 1;
+            if (!reduceMotion) {
+              void item.offsetWidth;
+              item.classList.add("filter-enter");
+            }
+          }
+        });
 
-        if (response.status === 200 && result.success) {
-          sentEl.style.display = 'block';
-          form.reset();
-        } else {
-          errorEl.textContent = result.message || 'There was an error sending your message. Please try again.';
-          errorEl.style.display = 'block';
+        if (filterStatus && filterGroup?.dataset.statusTemplate) {
+          const label = button.dataset.label || "selected";
+          filterStatus.textContent = filterGroup.dataset.statusTemplate
+            .replace(/\{count\}/g, String(visibleCount))
+            .replace(/\{label\}/g, label)
+            .replace(/\{s\}/g, visibleCount === 1 ? "" : "s");
         }
-      } catch (err) {
-        loadingEl.style.display = 'none';
-        errorEl.textContent = 'A network error occurred. Please check your connection and try again.';
-        errorEl.style.display = 'block';
-      } finally {
-        submitBtn.disabled = false;
-      }
-    });
-  }
 
+        window.AOS?.refresh();
+        requestScrollUpdate();
+      });
+    });
+
+    /* Static-host-friendly contact form: creates a real email draft */
+    const contactForm = document.querySelector("#contact-form");
+    contactForm?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (!contactForm.checkValidity()) {
+        contactForm.reportValidity();
+        return;
+      }
+
+      const recipient = contactForm.dataset.recipient || "";
+      if (!recipient) return;
+
+      const data = new FormData(contactForm);
+      const name = String(data.get("name") || "").trim();
+      const email = String(data.get("email") || "").trim();
+      const subject = String(data.get("subject") || "").trim();
+      const message = String(data.get("message") || "").trim();
+      const body = `${message}\n\nFrom: ${name}\nEmail: ${email}`;
+      const mailto = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      const status = contactForm.querySelector(".form-status");
+
+      if (status) {
+        status.textContent = (contactForm.dataset.successMessage || "").replace(/\{email\}/g, recipient);
+        status.classList.add("visible");
+      }
+      window.location.href = mailto;
+    });
+
+    const year = document.querySelector("#current-year");
+    if (year) year.textContent = new Date().getFullYear();
+  });
 })();

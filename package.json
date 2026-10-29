@@ -1,0 +1,13 @@
+{
+  "name": "sravan-content-driven-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static portfolio rendered from content/portfolio.ts with a small TypeScript build step.",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "watch:content": "tsc -p tsconfig.json --watch"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
