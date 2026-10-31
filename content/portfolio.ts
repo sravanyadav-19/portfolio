@@ -439,6 +439,7 @@ const portfolioContent: PortfolioContent = {
       { title: "College Hackathon", outcome: "Qualified", description: "Google Developers tie-up", footnote: "04 / Built Open Benefits", icon: "bi-lightbulb", highlight: "none" },
       { title: "Radiothon", outcome: "Top 10", description: "24-hour hybrid hackathon · Team of 3", footnote: "05 / Radion × CSI VIT-AP", icon: "bi-broadcast", highlight: "topTen" },
       { title: "September Sprint", outcome: "Top 5", description: "3rd-semester competition", footnote: "06 / Top-five finish", icon: "bi-lightning-charge", highlight: "topFive" },
+      { title: "Game Verse", outcome: "Top 10", description: "5th-semester competition · Team of 3", footnote: "07 / Android Club VIT-AP", icon: "bi-joystick", highlight: "topTen" },
     ],
   },
 
