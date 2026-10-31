@@ -300,10 +300,11 @@
     const items = achievements.items.map((item, index) => {
       const highlight = highlightClasses[item.highlight];
       const delay = index % 2 ? ' data-aos-delay="60"' : "";
+      const footnote = item.footnote.replace(/^\s*\d+\s*\/\s*/, "");
       return `
         <article class="achievement-card${highlight ? ` ${highlight}` : ""}" data-aos="fade-up"${delay}>
           <div class="achievement-top"><div class="badge-icon">${icon(item.icon)}</div><span class="outcome">${text(item.outcome)}</span></div>
-          <h3>${text(item.title)}</h3><p>${text(item.description)}</p><span class="achievement-foot">${text(item.footnote)}</span>
+          <h3>${text(item.title)}</h3><p>${text(item.description)}</p><span class="achievement-foot">${padNumber(index + 1)} / ${text(footnote)}</span>
         </article>`;
     }).join("");
 

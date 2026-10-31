@@ -226,6 +226,7 @@ const portfolioContent = {
             { title: "College Hackathon", outcome: "Qualified", description: "Google Developers tie-up", footnote: "04 / Built Open Benefits", icon: "bi-lightbulb", highlight: "none" },
             { title: "Radiothon", outcome: "Top 10", description: "24-hour hybrid hackathon · Team of 3", footnote: "05 / Radion × CSI VIT-AP", icon: "bi-broadcast", highlight: "topTen" },
             { title: "September Sprint", outcome: "Top 5", description: "3rd-semester competition", footnote: "06 / Top-five finish", icon: "bi-lightning-charge", highlight: "topFive" },
+            { title: "Game Verse", outcome: "Top 10", description: "5th-semester competition · Team of 3", footnote: "07 / Android Club VIT-AP", icon: "bi-joystick", highlight: "topTen" },
         ],
     },
     // CONTACT: section copy and every form label/placeholder/message.
@@ -525,10 +526,11 @@ const portfolioContent = {
         const items = achievements.items.map((item, index) => {
             const highlight = highlightClasses[item.highlight];
             const delay = index % 2 ? ' data-aos-delay="60"' : "";
+            const footnote = item.footnote.replace(/^\s*\d+\s*\/\s*/, "");
             return `
         <article class="achievement-card${highlight ? ` ${highlight}` : ""}" data-aos="fade-up"${delay}>
           <div class="achievement-top"><div class="badge-icon">${icon(item.icon)}</div><span class="outcome">${text(item.outcome)}</span></div>
-          <h3>${text(item.title)}</h3><p>${text(item.description)}</p><span class="achievement-foot">${text(item.footnote)}</span>
+          <h3>${text(item.title)}</h3><p>${text(item.description)}</p><span class="achievement-foot">${padNumber(index + 1)} / ${text(footnote)}</span>
         </article>`;
         }).join("");
         return `

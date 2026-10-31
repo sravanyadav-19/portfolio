@@ -4,7 +4,7 @@
   "private": true,
   "description": "Static portfolio rendered from content/portfolio.ts with a small TypeScript build step.",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && node scripts/version-assets.mjs",
     "watch:content": "tsc -p tsconfig.json --watch"
   },
   "devDependencies": {

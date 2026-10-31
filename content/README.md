@@ -11,6 +11,14 @@ npm run build     # regenerates assets/js/portfolio.js
 
 During repeated edits, use `npm run watch:content` instead. Do not edit the generated `assets/js/portfolio.js` directly. The generated file is included so the site still works on ordinary static hosting and GitHub Pages.
 
+## Automatic GitHub updates
+
+The included `.github/workflows/portfolio-build.yml` workflow runs the build after you push changes to `content/portfolio.ts` or the renderer. It commits the regenerated bundle and cache version automatically, so new projects and milestones appear without a manual rebuild. In repository settings, ensure **Actions → General → Workflow permissions → Read and write permissions** is enabled.
+
+## Add a milestone
+
+Copy an object inside `achievements.items` and edit its text, icon, and highlight. Its grid position and `01`, `02`, `03`… numbering are generated from the array order. You can write `footnote: "Team of four"` without adding a number yourself.
+
 ## Add a project
 
 Copy an object inside `projects.items`, then change its values:
